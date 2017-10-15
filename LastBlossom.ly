@@ -1,5 +1,41 @@
 \version "2.18.2"
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  http://lsr.di.unimi.it/LSR/Item?id=445
+
+%LSR by Jay Anderson.
+%modyfied by Simon Albrecht on March 2014.
+%=> http://lilypond.1069038.n5.nabble.com/LSR-445-error-td160662.html
+
+#(define (octave-up m t)
+ (let* ((octave (1- t))
+      (new-note (ly:music-deep-copy m))
+      (new-pitch (ly:make-pitch
+        octave
+        (ly:pitch-notename (ly:music-property m 'pitch))
+        (ly:pitch-alteration (ly:music-property m 'pitch)))))
+  (set! (ly:music-property new-note 'pitch) new-pitch)
+  new-note))
+
+#(define (octavize-chord elements t)
+ (cond ((null? elements) elements)
+     ((eq? (ly:music-property (car elements) 'name) 'NoteEvent)
+       (cons (car elements)
+             (cons (octave-up (car elements) t)
+                   (octavize-chord (cdr elements) t))))
+     (else (cons (car elements) (octavize-chord (cdr elements ) t)))))
+
+#(define (octavize music t)
+ (if (eq? (ly:music-property music 'name) 'EventChord)
+       (ly:music-set-property! music 'elements (octavize-chord
+(ly:music-property music 'elements) t)))
+ music)
+
+makeOctaves = #(define-music-function (parser location arg mus) (integer? ly:music?)
+ (music-map (lambda (x) (octavize x arg)) (event-chord-wrap! mus)))
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \header {
   title = "王菲 － 開到荼蘼"
   subtitle = "For female voice and piano accompaniment"
@@ -27,33 +63,98 @@ lower-melodya = \relative c' {
   eis, bis' eis fisis gisis bis
 }
 
+lower-melodya-dash = \relative c' {
+  \time 6/8
+  ais,8 bis' cis eis cis ais
+  gisis, bis' cis eis cis bis
+  gis, bis' cis eis cis gis
+  fisis, bis' cis eis cis ais
+  fis, ais' cis eis dis cis
+  fis,, gisis' bis dis cis bis
+  eis,, fis' ais bis cis dis
+  eis,, gisis' cis bis ais gisis
+
+  ais,8 bis' cis eis cis ais
+  gisis, bis' cis eis cis bis
+  gis, bis' cis eis cis gis
+  fisis, bis' cis eis cis ais
+  dis,, ais'' cis fis cis ais
+  cis,, ais'' cis fis cis ais
+  bis,, fis'' ais dis ais fis
+  eis,, bis'' eis fisis gisis bis
+}
+
 upper-melodya = \relative c''' {
+  \clef treble
   \time 6/8
   r4. <bis cis eis> r q r q r <bis cis eis>16 eis, gis fisis fis eis
   cis4 gis'16 ais <gis cis eis>4.
   r8 dis eis <dis gisis> ais'16 eis gisis ais
-  bis gisis fis dis bis ais gisis4 <eis' dis'>8
+  bis gisis fis dis bis ais gisis4 <eis dis'>8
   <gisis eis'>4 <ais fisis'>8 <bis gisis'>4.
 
-  r4. <bis cis eis> r q r q r <bis cis eis>16 eis, gis fisis fis eis
+  r4. <bis' cis eis> r q r q r <bis cis eis>16 eis, gis fisis fis eis
   cis4 gis'16 ais <gis cis eis>4.
   r8 dis eis <dis gisis> ais'16 eis gisis ais
   bis gisis fis dis bis ais gisis4 <fis eis'>8
   <fisis dis' >4 <gis cis>8 << { bis16 cis cisis dis disis eis } \\ { <gisis, bis>4. } >>
 }
 
-upper-bridgea = \relative c'' {
+compound-meter-to-simple-meter-mark = \tempo \markup {
+  \concat {
+    (
+    \smaller \general-align #Y #DOWN \note #"8." #1
+    "="
+    \smaller \general-align #Y #DOWN \note #"4" #1
+    )
+  }
+}
+
+simple-meter-to-compound-meter-mark = \tempo \markup {
+  \concat {
+    (
+    \smaller \general-align #Y #DOWN \note #"4" #1
+    "="
+    \smaller \general-align #Y #DOWN \note #"8." #1
+    )
+  }
+}
+
+upper-bridgea-print = \relative c'' {
+  fis16 ais, fis eis' gis, eis disis' gis, disis dis' ais dis,
+  \time 3/4
+  \compound-meter-to-simple-meter-mark
+  \tuplet 3/2 4 { d'8 ais d, cis' a cis, bis' <dis, eis> bis }
+}
+
+upper-bridgea-midi = \relative c'' {
   fis16 ais, fis eis' gis, eis disis' gis, disis dis' ais dis,
   \time 3/4
   \tempo 4 = 104
   \tuplet 3/2 4 { d'8 ais d, cis' a cis, bis' <dis, eis> bis }
 }
 
-lower-bridgea = \relative c, {
+lower-bridgea-print = \relative c, {
+  dis8. eis fis fisis
+  \time 3/4
+  eis4 fisis gisis
+}
+
+lower-bridgea-midi = \relative c, {
   dis8. eis fis fisis
   \time 3/4
   \tempo 4 = 104
   eis4 fisis gisis
+}
+
+upper-bridgea-dash = \relative c'' {
+  \tuplet 3/2 4 {
+    <fisis disis'>8 bis fisis <aisis eis'> cis aisis <fisis cis' fis> ais cis
+  }
+}
+
+lower-bridgea-dash = \relative c, {
+  <eis eis'>4 <fisis fisis'> <gisis gisis'>
 }
 
 upper-melodyb = \relative c' {
@@ -84,7 +185,7 @@ upper-melodyc = \relative c'' {
   \tuplet 3/2 4 { <eis, ais bis eis>4 bis,8 <cis eis>4 bis'8 <cis eis>4 cis'8 }
   <bis, dis ais'>2. \tuplet 3/2 4 { dis8 eis bis' }
   \tuplet 3/2 4 { <cis, eis cis'>4 cis,8 <dis fis>4 cis'8 } <dis fis>4
-  \tuplet 3/2 4 { <gisis, eis'>8 cis <ais fisis'>8 cis dis fisis <dis eis gisis>4 <dis fisis gisis bis>8 cis' bis b }
+  \tuplet 3/2 4 { <gisis, eis'>8 cis <ais fisis'>8 cis dis fisis <dis eis gisis>4 <dis fisis gisis bis>8~ } q4
 }
 
 lower-melodyc = \relative c {
@@ -98,7 +199,73 @@ lower-melodyc = \relative c {
   \tuplet 3/2 { <eis,, eis'>4 <dis dis'>8~ } q4 \tuplet 3/2 4 { <cis cis'>4 <bis bis'>8~ } q4
 }
 
-lower-melodyd = \relative c {
+upper-melodyd = \relative c'' {
+  <fisis ais>4 q q <gis ais> q q q
+  <eis ais>4 q q <cis eis> <dis eis> <dis fisis> <dis fis>
+  <fisis ais>4 q q <dis ais'> q <dis gis> q
+  <dis fis> q <e fis>
+  \clef bass
+  <fisis,, gisis dis'>1~
+  \time 2/4
+  q2
+}
+
+lower-melodyd = \relative c'' {
+  \clef treble
+  \repeat unfold 3 { \tuplet 3/2 4 { ais8 cis eis } }
+  \repeat unfold 4 { \tuplet 3/2 4 { ais,8 bis dis } }
+  \repeat unfold 3 { \tuplet 3/2 4 { fisis,8 ais cis } }
+  \tuplet 3/2 4 { fis,8 ais cis fis, ais cis eis, gisis cis eis, gisis bis }
+  \repeat unfold 3 { \tuplet 3/2 4 { ais8 cis eis } }
+  \repeat unfold 4 { \tuplet 3/2 4 { bis dis eis } }
+  \tuplet 3/2 4 { cis8 dis ais' cis, dis ais' cis, e ais }
+  \clef bass
+  <eis,,, bis'>1~
+  \time 2/4
+  q2
+}
+
+upper-melodyd-dash = \relative c' {
+  <fisis cis' eis fisis>4 <fis bis dis fis> <fisis ais cis eis> <gis b cis eis> <gis cis eis gis> <fisis ais cis eis> <fis gisis bis dis>
+  <ais e' fis ais> <ais cis fis ais> <bis dis eis bis'> <cis eis fisis cis'> <ais e' fis ais> <bis dis fis bis> <dis eis gisis dis'>
+  <bis cis eis ais> <cis eis gisis cis> <cis eis gis bis> <ais cis eis ais> <gis cis e gis> <bis dis eis gisis> <bis dis fis gisis>
+  <ais cis eis ais> <gis cis fis gis> <bis dis fis bis> <eis, fisis ais eis'> <fisis ais cis fisis> <gisis b dis gisis> <eis gisis dis' eis>
+}
+
+lower-melodyd-dash = \relative c, {
+  \makeOctaves #1 {
+    ais4 bis fisis dis gisis fisis gis
+    ais dis, eis fisis gis gisis bis
+    ais gisis gis fisis fis eis gisis
+    fis disis gisis eis dis cis bis
+  }
+}
+
+upper-bridged = \relative c' {
+  \time 6/8
+  R2.
+}
+
+lower-bridged = \relative c {
+  \time 6/8
+  \clef bass
+  eis16 <ais cis> eis' disis, <gisis cis> eis'
+  dis, <cis' eis> cis, <bis' eis> bis, <gisis' eis'>
+}
+
+upper-melodye = \relative c' {
+  % \tuplet 3/2 4 { r8 eis bis' <cis eis> eis bis' <cis eis> eis bis' <cis eis> eis bis'}
+  \tuplet 3/2 4 { ais8 bis cis cisis dis disis eis disis dis cisis cis bis r eis bis' <cis eis> eis bis' } <cis eis>4
+  \tuplet 3/2 4 { gis,,8 ais aisis bis cis cisis dis cisis cis bis aisis ais r eis' bis' <cis eis> eis bis' } <cis eis>4
+  \tuplet 3/2 4 { fisis,,,8 gis gisis ais aisis bis cis bis aisis ais gisis gis r eis' bis' <cis eis> eis bis' } <cis eis>4
+  <ais,, cis fis>4 <gisis bis fis'> <fisis bis fis'> <fis bis fis'> <gis b fis'> <fisis aisis gis'> <fisis aisis fis'>
+}
+
+lower-melodye = \relative c, {
+  \tuplet 3/2 4 { <ais ais'>8 bis' cis cisis dis disis eis disis dis cisis cis bis ais eis' ais <bis eis> eis ais } <bis eis>4
+  \tuplet 3/2 4 { <gis,,, gis'>8 ais' aisis bis cis cisis dis cisis cis bis aisis ais gis eis' ais <bis eis> eis ais } <bis eis>4
+  \tuplet 3/2 4 { <fisis,,, fisis'>8 gis' gisis ais aisis bis cis bis aisis ais gisis gis fisis eis' ais <bis eis> eis ais } <bis eis>4
+  \makeOctaves #1 { fis,,,4 eis disis dis cisis cis bis }
 }
 
 upper-midi = \relative c' {
@@ -108,9 +275,22 @@ upper-midi = \relative c' {
   \tempo 4. = 52
   \time 6/8
   \upper-melodya
-  \upper-bridgea
+  \upper-bridgea-midi
   \upper-melodyb
   \upper-melodyc
+  \time 2/4 r4 \tuplet 3/2 4 { cis''8 bis b }
+  \time 7/4
+  \upper-melodyd
+  \tempo 4. = 52
+  \upper-bridged
+  \upper-melodya
+  \tempo 4 = 104
+  \upper-bridgea-dash
+  \upper-melodyb
+  \upper-melodyc
+  \upper-melodyd-dash
+  \upper-melodye
+  \upper-melodye
   \bar "|."
 }
 
@@ -120,9 +300,21 @@ lower-midi = \relative c {
   \clef bass
   \time 6/8
   \lower-melodya
-  \lower-bridgea
+  \lower-bridgea-midi
   \lower-melodyb
   \lower-melodyc
+  \time 2/4
+  R2
+  \time 7/4
+  \lower-melodyd
+  \lower-bridged
+  \lower-melodya-dash
+  \lower-bridgea-dash
+  \lower-melodyb
+  \lower-melodyc
+  \lower-melodyd-dash
+  \lower-melodye
+  \lower-melodye
   \bar "|."
 }
 
@@ -133,9 +325,22 @@ upper-print = \relative c' {
   \tempo 4. = 52
   \time 6/8
   \upper-melodya
-  \upper-bridgea
+  \upper-bridgea-print
   \upper-melodyb
   \upper-melodyc
+  \time 2/4 r4 \tuplet 3/2 4 { cis''8 bis b }
+  \time 7/4
+  \upper-melodyd
+  \simple-meter-to-compound-meter-mark
+  \upper-bridged
+  \upper-melodya
+  \compound-meter-to-simple-meter-mark
+  \upper-bridgea-dash
+  \upper-melodyb
+  \upper-melodyc
+  \upper-melodyd-dash
+  \upper-melodye
+  \upper-melodye
   \bar "|."
 }
 
@@ -145,9 +350,21 @@ lower-print = \relative c {
   \clef bass
   \time 6/8
   \lower-melodya
-  \lower-bridgea
+  \lower-bridgea-print
   \lower-melodyb
   \lower-melodyc
+  \time 2/4
+  R2
+  \time 7/4
+  \lower-melodyd
+  \lower-bridged
+  \lower-melodya-dash
+  \lower-bridgea-dash
+  \lower-melodyb
+  \lower-melodyc
+  \lower-melodyd-dash
+  \lower-melodye
+  \lower-melodye
   \bar "|."
 }
 
@@ -251,7 +468,7 @@ melodyd = \relative c' {
 melodye = \relative c' {
   \repeat unfold 3 {
     \tuplet 3/2 4 { eis4 disis8 eis4 disis8 eis4 disis8 } eis4
-    \tuplet 3/2 4 { eis4 ais8 ais4 gisis8 } ais4
+    \tuplet 3/2 4 { ais4 ais8 ais4 gisis8 } ais4
   }
   fis4 fis fis fis \tuplet 3/2 4 { fis4 fis8 } gis4( fis)
 }
@@ -265,12 +482,19 @@ melody = \relative c' {
   \time 3/4 r2
   \melodyb
   \melodyc
+  \time 2/4 R2
+  \time 7/4
   \melodyd
+  \time 2/4
+  R2
+  \time 6/8
+  R2.
   \time 6/8
   \melodya
   \time 3/4 r2
   \melodyb
   \melodyc
+  \time 7/4
   \melodyd
   \melodye
   \melodye
