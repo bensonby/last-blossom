@@ -446,15 +446,15 @@ melodyb = \relative c' {
   \tuplet 3/2 4 { r4 bis8 }
   \time 7/4
   \tuplet 3/2 4 { cis4 bis8 cis4 bis8 cis4 eis8 } bis4 ais4 \tuplet 3/2 4 { bis4 gis8~ } gis4
-  \tuplet 3/2 4 { cis4 bis8 cis4 bis8 cis4 eis8 eis4 gis8 fis4 fis8 } eis4 dis4
+  \tuplet 3/2 4 { cis4 bis8 cis4 bis8 cis4 eis8 gis4 gis8 fis4 fis8 } eis4 dis4
   \tuplet 3/2 4 { cis4 bis8 cis4 bis8 cis4 gis'8 } bis,4 ais \tuplet 3/2 4 { bis4 gis8~ gis4 ais8 }
   ais4 bis \tuplet 3/2 4 { cis4 fis8 } eis4 fisis4 gisis4 eis4
 }
 
 melodyc = \relative c' {
   \tuplet 3/2 4 { eis4 disis8 eis4 disis8 eis4 ais8 } ais4 \tuplet 3/2 4 { gis4 fis8 eis4 dis8~ } dis4
-  \tuplet 3/2 4 { eis4 disis8 eis4 disis8 eis4 ais8 ais4 gis8 } fis4 \tuplet 3/2 4 {eis4 dis8~ } dis4
-  \tuplet 3/2 4 { eis4 disis8 eis4 disis8 eis4 ais,8 } ais4 \tuplet 3/2 4 { dis4 cis8 bis4 cis8~ } cis4
+  \tuplet 3/2 4 { eis4 disis8 eis4 disis8 eis4 ais8 gis4 fis8 } fis4 \tuplet 3/2 4 {eis4 dis8~ } dis4
+  \tuplet 3/2 4 { eis4 disis8 eis4 disis8 eis4 ais,8 } dis4 \tuplet 3/2 4 { dis4 cis8 bis4 cis8~ } cis4
   \tuplet 3/2 4 { ais4 ais8 bis4 cis8 } fis4 \tuplet 3/2 4 { eis4 fisis8~ } fisis4 \tuplet 3/2 4 { gisis4 bis8~ } bis4
 }
 
@@ -494,7 +494,6 @@ melody = \relative c' {
   \time 3/4 r2
   \melodyb
   \melodyc
-  \time 7/4
   \melodyd
   \melodye
   \melodye
