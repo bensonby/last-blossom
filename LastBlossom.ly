@@ -179,22 +179,22 @@ lower-melodyb = \relative c {
 
 upper-melodyc = \relative c'' {
   \tuplet 3/2 4 { <eis bis' eis>4 bis,8 <cis eis>4 bis'8 <cis eis>4 cis'8 }
-  <bis, dis ais'>2. \tuplet 3/2 4 { dis8 eis bis' }
+  << { ais2. } \\ { <bis, dis>4 <b dis> <ais cis> } >> \tuplet 3/2 4 { dis8 eis bis' }
   \tuplet 3/2 4 { <cis, eis cis'>4 cis,8 <eis fisis>4 cis'8 <eis fisis>4 cis'8 }
-  <cis, eis cis'>2. \tuplet 3/2 4 { fis8 gisis bis }
+  << {cis2. } \\ { <fis, ais>4 <d gis> <cis eis> } >> \tuplet 3/2 4 { fis8 gisis bis }
   \tuplet 3/2 4 { <eis, ais bis eis>4 bis,8 <cis eis>4 bis'8 <cis eis>4 cis'8 }
-  <bis, dis ais'>2. \tuplet 3/2 4 { dis8 eis bis' }
+  << { ais2. } \\ { <bis, dis>4 <b dis> <ais cis> } >> \tuplet 3/2 4 { dis8 eis bis' }
   \tuplet 3/2 4 { <cis, eis cis'>4 cis,8 <dis fis>4 cis'8 } <dis fis>4
   \tuplet 3/2 4 { <gisis, eis'>8 cis <ais fisis'>8 cis dis fisis <dis eis gisis>4 <dis fisis gisis bis>8~ } q4
 }
 
 lower-melodyc = \relative c {
   \tuplet 3/2 4 { <ais, ais'>4 disis'8 eis4 gisis8 } ais4
-  <gis,, gis'> <ais ais'> <bis bis'> <gis gis'>
+  <bis,, bis'> <b b'> <ais ais'> <gisis gisis'>
   \tuplet 3/2 4 { <fisis fisis'>4 ais'8 cis4 eis8 } fisis4
-  <fis,, fis'> <eis eis'> <gis gis'> <gisis gisis'>
+  <dis,, dis'> <e e'> <fisis fisis'> <gisis gisis'>
   \tuplet 3/2 4 { <ais ais'>4 disis'8 eis4 gisis8 } ais4
-  <gis,, gis'> <ais ais'> <bis bis'> <gis gis'>
+  <bis,, bis'> <b b'> <ais ais'> <gisis gisis'>
   \tuplet 3/2 4 { <fis fis'>4 ais'8 cis4 eis8} fis4
   \tuplet 3/2 { <eis,, eis'>4 <dis dis'>8~ } q4 \tuplet 3/2 4 { <cis cis'>4 <bis bis'>8~ } q4
 }
@@ -229,7 +229,7 @@ upper-melodyd-dash = \relative c' {
   <fisis cis' eis fisis>4 <fis bis dis fis> <fisis ais cis eis> <gis b cis eis> <gis cis eis gis> <fisis ais cis eis> <fis gisis bis dis>
   <ais e' fis ais> <ais cis fis ais> <bis dis eis bis'> <cis eis fisis cis'> <ais e' fis ais> <bis dis fis bis> <dis eis gisis dis'>
   <bis cis eis ais> <cis eis gisis cis> <cis eis gis bis> <ais cis eis ais> <gis cis e gis> <bis dis eis gisis> <bis dis fis gisis>
-  <ais cis eis ais> <gis cis fis gis> <bis dis fis bis> <eis, fisis ais eis'> <fisis ais cis fisis> <gisis b dis gisis> <eis gisis dis' eis>
+  <ais cis eis ais> <gis cis fis gis> <fis bis dis fis> <eis fisis ais eis'> <fisis ais cis fisis> <gisis b dis gisis> <eis gisis dis' eis>
 }
 
 lower-melodyd-dash = \relative c, {
@@ -268,6 +268,54 @@ lower-melodye = \relative c, {
   \makeOctaves #1 { fis,,,4 eis disis dis cisis cis bis }
 }
 
+upper-bridgee = \relative c' {
+  << {
+    \makeOctaves #1 { \tuplet 3/2 4 { dis8 cisis dis disis eis fis eis disis eis fis fisis gis
+    gisis ais b bis cis cisis dis disis eis fis fis eis }}
+  } \\ {
+    <a, bis>4 s4 <b cisis> s <dis fis> <fis gisis> <gisis bis> <bis dis>
+  } >>
+}
+
+lower-bridgee = \relative c, {
+  \makeOctaves #1 { \tuplet 3/2 4 {
+    fis8 eis fis fisis gis a gis fisis gis gisis ais b
+    bis cis cisis dis disis eis fis fisis gis gisis ais bis
+  }}
+}
+
+upper-ending-print = \relative c'' {
+  fis16 ais, fis eis' gis, eis disis' gis, disis dis' ais dis,
+  \time 3/4
+  \compound-meter-to-simple-meter-mark
+  \tuplet 3/2 4 { d'8 ais d, cis' a cis, bis' <dis, eis> bis }
+  <cis eis fisis>2.
+}
+
+upper-ending-midi = \relative c'' {
+  fis16 ais, fis eis' gis, eis disis' gis, disis dis' ais dis,
+  \time 3/4
+  \tempo 4 = 104
+  \tuplet 3/2 4 { d'8 ais d, cis' a cis, bis' <dis, eis> bis }
+  <cis eis fisis>2.
+}
+
+lower-ending-print = \relative c, {
+  dis8. eis fis fisis
+  \time 3/4
+  eis4 fisis gisis
+  ais2.
+}
+
+lower-ending-midi = \relative c, {
+  dis8. eis fis fisis
+  \time 3/4
+  \tempo 4 = 104
+  eis4 fisis gisis
+  ais2.
+}
+
+
 upper-midi = \relative c' {
   \set Staff.pedalSustainStyle = #'bracket
   \key ais \minor
@@ -289,8 +337,15 @@ upper-midi = \relative c' {
   \upper-melodyb
   \upper-melodyc
   \upper-melodyd-dash
+  \time 4/4
+  \upper-bridgee
+  \time 7/4
   \upper-melodye
   \upper-melodye
+  \time 6/8
+  \tempo 4. = 52
+  \upper-melodya
+  \upper-ending-midi
   \bar "|."
 }
 
@@ -313,8 +368,14 @@ lower-midi = \relative c {
   \lower-melodyb
   \lower-melodyc
   \lower-melodyd-dash
+  \time 4/4
+  \lower-bridgee
+  \time 7/4
   \lower-melodye
   \lower-melodye
+  \time 6/8
+  \lower-melodya
+  \lower-ending-midi
   \bar "|."
 }
 
@@ -339,8 +400,15 @@ upper-print = \relative c' {
   \upper-melodyb
   \upper-melodyc
   \upper-melodyd-dash
+  \time 4/4
+  \upper-bridgee
+  \time 7/4
   \upper-melodye
   \upper-melodye
+  \simple-meter-to-compound-meter-mark
+  \time 6/8
+  \upper-melodya
+  \upper-ending-print
   \bar "|."
 }
 
@@ -363,8 +431,14 @@ lower-print = \relative c {
   \lower-melodyb
   \lower-melodyc
   \lower-melodyd-dash
+  \time 4/4
+  \lower-bridgee
+  \time 7/4
   \lower-melodye
   \lower-melodye
+  \time 6/8
+  \lower-melodya
+  \lower-ending-print
   \bar "|."
 }
 
@@ -473,6 +547,12 @@ melodye = \relative c' {
   fis4 fis fis fis \tuplet 3/2 4 { fis4 fis8 } gis4( fis)
 }
 
+melodyf = \relative c' {
+  r4. r8 dis eis eis dis r dis dis cis eis ais, ais r4 ais8 ais4 gis8 ais cis4
+  R2. R2. r4. r4 eis,8 gisis4 ais8 bis4 r8
+  r4. r8 dis eis eis dis r dis dis cis eis ais, ais r4 ais8 ais4 gis8 ais cis4
+}
+
 melody = \relative c' {
   \key ais \minor
   \clef treble
@@ -495,17 +575,22 @@ melody = \relative c' {
   \melodyb
   \melodyc
   \melodyd
+  \time 4/4
+  R1 R1
+  \time 7/4
   \melodye
   \melodye
+  \time 6/8
+  \melodyf
 }
 
 
 \book {
 \score {
   <<
-    \new ChordNames {
-      \guitarchords
-    }
+    % \new ChordNames {
+      % \guitarchords
+    % }
     \new Staff = "melodystaff" <<
       \set Staff.midiInstrument = #"choir aahs"
       \set Staff.instrumentName = #"Voice"
@@ -531,10 +616,10 @@ melody = \relative c' {
 \book {
 \score {
   <<
-    \new ChordNames {
-      \set chordChanges = ##t
-      \guitarchords
-    }
+    % \new ChordNames {
+      % \set chordChanges = ##t
+      % \guitarchords
+    % }
     \new Staff = "melodystaff" \with {
       fontSize = #-3
       \override StaffSymbol.staff-space = #(magstep -3)
