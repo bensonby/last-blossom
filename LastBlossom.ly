@@ -690,8 +690,10 @@ melody = \relative c' {
       % \guitarchords
     % }
     \new Staff = "melodystaff" <<
-      \set Staff.midiInstrument = #"choir aahs"
+      \set Staff.midiInstrument = #"electric guitar (clean)"
       \set Staff.instrumentName = #"Voice"
+      \set Staff.midiMinimumVolume = #0.9
+      \set Staff.midiMaximumVolume = #1
       \new Voice = "melody" {
         \melody
       }
@@ -700,8 +702,16 @@ melody = \relative c' {
     \new PianoStaff <<
       \set Staff.midiInstrument = #"acoustic grand"
       \set Staff.instrumentName = #"Piano"
-      \new Staff = "right" { \upper-midi }
-      \new Staff = "left" { \lower-midi }
+      \new Staff = "right" {
+        \set Staff.midiMinimumVolume = #0.1
+        \set Staff.midiMaximumVolume = #0.4
+        \upper-midi
+      }
+      \new Staff = "left" {
+        \set Staff.midiMinimumVolume = #0.1
+        \set Staff.midiMaximumVolume = #0.4
+        \lower-midi
+      }
     >>
   >>
   \midi {
