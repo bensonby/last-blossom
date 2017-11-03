@@ -42,51 +42,22 @@ makeOctaves = #(define-music-function (parser location arg mus) (integer? ly:mus
   arranger = "Arranged by Benson"
 }
 
-lower-prelude = \relative c {
-  \time 6/8
-  \key f \minor
-  \partial 8. r8.
-  e8 g' c, bes g' c, f, aes' c, aes aes' c, g bes' e, des bes' e, aes, aes' f c aes' f
-  bes,, des' g, f des' g, c, c' aes f c' aes c, e' bes g e' bes f f' c aes f' des
-  e,8 g' c, bes g' c, f, aes' c, aes aes' c, g bes' ees, des bes' ees, aes, aes' ees c aes' ees
-  des, f' bes, aes f' bes, ees, ees' c aes ees' c ees, ees' des g, ees' des aes, c' ees, fes des' ees,
-  aes, c' ees, fes des' ees, aes, c' ees, c g' bes e4. r4.
-  bes,8 c' des f des c bes c des f des c
+lower-prelude = \relative c' {
+  ais8 bis cis eis cis bis
+  gisis bis cis eis cis bis
+  gis bis cis eis cis bis
+  fisis bis cis eis cis bis
+  fis cis' eis ais eis cis
+  eis, bis' eis gisis eis bis
+  ais bis cis eis cis bis
+  ais bis cis eis cis bis
 }
 
-upper-prelude = \relative c'' {
-  \time 6/8
-  \key f \minor
-  \partial 8. c8.
-  c16 des b c ees des c des b c fis g c, des b c ees des c des b c aes' f
-  e f e dis e g bes c bes a bes des c des c b c g aes bes aes g aes e
-  f g f e f c des ees des c des b c des c b c g aes bes aes g aes f
-  e g bes des e g bes des c bes aes g bes c aes g aes f e g f e f des
-  c des b c ees des c des b c fis g c, des b c ees des c des b c aes' f
-  ees f ees d ees g bes c bes a es f' ees f ees d ees b c des c b c g
-  aes bes aes g aes e f g f e f des c des bes g aes bes c des ees f g aes
-  g aes f ees f des c des bes c f, g 
-  aes bes aes g aes a bes c bes c f, g aes bes aes g aes a bes c bes c f, g
-  aes bes aes g aes bes c-"rit." des c
-  \set Score.tempoHideNote = ##t
-  \tempo 4. = 84
-  b c des
-  \tempo 4. = 78
-  c des c
-  \tempo 4. = 69
-  b c des
-  \tempo 4. = 60
-  c des c
-  \tempo 4. = 48
-  bes a f
-  \set Score.tempoHideNote = ##f
-  \tempo 4. = 52
-  bes8 r r r4.
-  R2.
+upper-prelude = \relative c''' {
+  eis4. e dis d cis bis b ais~ ais2. r4. cis,8 bis b ais4. r R2.
 }
 
 lower-melodya = \relative c' {
-  \key ais \minor
   ais8 bis cis eis cis ais
   gisis bis cis eis cis bis
   gis bis cis eis cis gis
@@ -324,44 +295,38 @@ lower-bridgee = \relative c, {
   }}
 }
 
-upper-bridge-ending = \relative c' {
+upper-bridge-ending-print = \relative c {
+  \tuplet 3/2 4 { <eis ais eis'>4 ais'8 <bis eis> <bis' eis>4->~ } q4
+  \tuplet 3/2 4 { <eis,, ais eis'>4 ais8 <bis eis> <bis' eis>4->~ } q4
+  \time 2/4
+  \tuplet 3/2 4 { <eis,, ais eis'>4-- <ais eis'>8-- bis <bis' eis>4-- }
+  \simple-meter-to-compound-meter-mark
+  \time 3/8
+  <cis ais'>8 <bis gis'> <ais fis'>
   \time 6/8
-  \key ees \minor
-  << {
-    ges'4.~ ges4 f16 ees bes'4. aes
-    ces4.~ ces4 bes16 f bes2.
-    ees4.~ ees8 des16 ces aes ees ges4~ ges16 f ees4.
-    <ces fes>4. d4~ d16 ees <ees ges,>4.
-  } \\ {
-    ees4. s4 s16 \hideNotes ees~ \unHideNotes ees2~ ees8. f16~ f2. fes2~
-    \stemUp
-    fes8. ees16~
-    \stemDown
-    ees2. d4. ees s4. aes,4.
-  } >>
-  r4.
-  <f' bes ees f>4. <f bes des f> <f a c f>2.
+  <gisis eis'>4. dis'
 }
 
-lower-bridge-ending = \relative c' {
-  \key ees \minor
-  << {
-    bes16 ces a ces bes ges \stemNeutral bes ces a ces bes \change Staff = "right" ees
-    \change Staff = "left" \stemUp
-    ces des bes des ces aes ces des bes des ces aes~
-    aes bes g bes aes f \stemNeutral aes bes g bes aes \change Staff = "right" f'
-    \change Staff = "left" \stemUp
-    g, aes fis aes g e g aes fis aes g8~
-    g16 aes fis aes g ees aes bes g bes aes8~
-    aes16 bes g bes aes f ges aes f aes ges ees
-    \change Staff = "right" \stemNeutral
-    aes bes g bes aes \change Staff = "left" fes \stemUp f ges e ges f bes,~
-    bes ces a ces bes ges ees f d f ees ces
-  } \\ {
-    ees'2. f d des ces bes4. ces aes bes ees,4
-  } >>
-  bes'8 bes' ees f des bes
-  f, a' c f c a
+upper-bridge-ending-midi = \relative c {
+  \tuplet 3/2 4 { <eis ais eis'>4 ais'8 <bis eis> <bis' eis>4->~ } q4
+  \tuplet 3/2 4 { <eis,, ais eis'>4 ais8 <bis eis> <bis' eis>4->~ } q4
+  \time 2/4
+  \tuplet 3/2 4 { <eis,, ais eis'>4 <ais eis'>8 bis <bis' eis>4-> }
+  \tempo 4. = 52
+  \time 3/8
+  <cis ais'>8 <bis gis'> <ais fis'>
+  \time 6/8
+  <gisis eis'>4. dis'
+}
+
+lower-bridge-ending = \relative c,,, {
+  \tuplet 3/2 4 {<ais' ais'>8 eis'' ais bis cis eis } ais4
+  \tuplet 3/2 4 { gis8 bis eis~ } eis2
+  \tuplet 3/2 4 { fis,8 fis' ais, ais' gis, gis' }
+  \time 3/8
+  fis,4.
+  \time 6/8
+  eis2.
 }
 
 upper-ending-print = \relative c'' {
@@ -399,7 +364,7 @@ lower-ending-midi = \relative c, {
 upper-midi = \relative c' {
   \set Staff.pedalSustainStyle = #'bracket
   \clef treble
-  \tempo 4. = 90
+  \tempo 4. = 52
   \time 6/8
   \upper-prelude
   \key ais \minor
@@ -423,10 +388,7 @@ upper-midi = \relative c' {
   \time 7/4
   \upper-melodye
   \upper-melodye
-  \time 6/8
-  \tempo 4. = 52
-  \upper-bridge-ending
-  \key ais \minor
+  \upper-bridge-ending-midi
   \upper-melodya
   \upper-ending-midi
   \bar "|."
@@ -436,6 +398,7 @@ lower-midi = \relative c {
   \set Staff.pedalSustainStyle = #'bracket
   \clef bass
   \time 6/8
+  \key ais \minor
   \lower-prelude
   \lower-melodya
   \lower-bridgea-midi
@@ -456,9 +419,7 @@ lower-midi = \relative c {
   \time 7/4
   \lower-melodye
   \lower-melodye
-  \time 6/8
   \lower-bridge-ending
-  \key ais \minor
   \lower-melodya
   \lower-ending-midi
   \bar "|."
@@ -467,10 +428,10 @@ lower-midi = \relative c {
 upper-print = \relative c' {
   \set Staff.pedalSustainStyle = #'bracket
   \clef treble
-  \tempo 4. = 90
+  \tempo 4. = 52
   \time 6/8
-  \upper-prelude
   \key ais \minor
+  \upper-prelude
   \upper-melodya
   \upper-bridgea-print
   \upper-melodyb
@@ -492,9 +453,7 @@ upper-print = \relative c' {
   \upper-melodye
   \upper-melodye
   \simple-meter-to-compound-meter-mark
-  \time 6/8
-  \upper-bridge-ending
-  \key ais \minor
+  \upper-bridge-ending-print
   \upper-melodya
   \upper-ending-print
   \bar "|."
@@ -504,6 +463,7 @@ lower-print = \relative c {
   \set Staff.pedalSustainStyle = #'bracket
   \clef bass
   \time 6/8
+  \key ais \minor
   \lower-prelude
   \lower-melodya
   \lower-bridgea-print
@@ -524,9 +484,7 @@ lower-print = \relative c {
   \time 7/4
   \lower-melodye
   \lower-melodye
-  \time 6/8
   \lower-bridge-ending
-  \key ais \minor
   \lower-melodya
   \lower-ending-print
   \bar "|."
@@ -646,10 +604,8 @@ melodyf = \relative c' {
 melody = \relative c' {
   \clef treble
   \time 6/8
-  \key f \minor
-  \partial 8. r8.
-  R2.*21
   \key ais \minor
+  R2.*8
   \melodya
   R2.
   \time 3/4 r2
@@ -673,10 +629,14 @@ melody = \relative c' {
   \time 7/4
   \melodye
   \melodye
+  \time 3/4
+  R2.*2
+  \time 2/4
+  R2
+  \time 3/8
+  R4.
   \time 6/8
-  \key ees \minor
-  R2.*10
-  \key ais \minor
+  R2.
   \melodyf
   R2.*7
   \bar "|."
