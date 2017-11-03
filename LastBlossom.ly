@@ -1,4 +1,5 @@
 \version "2.18.2"
+#(set-global-staff-size 16)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%  http://lsr.di.unimi.it/LSR/Item?id=445
@@ -43,9 +44,9 @@ makeOctaves = #(define-music-function (parser location arg mus) (integer? ly:mus
 }
 
 lower-prelude = \relative c' {
-  ais8 bis cis eis cis bis
-  gisis bis cis eis cis bis
-  gis bis cis eis cis bis
+  ais8\( bis cis eis cis bis\)
+  gisis\( bis cis eis cis bis\)
+  gis_"simile" bis cis eis cis bis
   fisis bis cis eis cis bis
   fis cis' eis ais eis cis
   eis, bis' eis gisis eis bis
@@ -54,7 +55,7 @@ lower-prelude = \relative c' {
 }
 
 upper-prelude = \relative c''' {
-  eis4. e dis d cis bis b ais~ ais2. r4. cis,8 bis b ais4. r R2.
+  eis4.\( e dis d cis bis b ais~\) ais2. r4. cis,8\( bis b ais4.\) r R2.
 }
 
 lower-melodya = \relative c' {
@@ -99,17 +100,17 @@ lower-melodya-dash = \relative c' {
 
 upper-melodya = \relative c''' {
   \clef treble
-  r4. <bis cis eis> r q r q r <bis cis eis>16 eis, gis fisis fis eis
-  cis4 gis'16 ais <gis cis eis>4.
-  r8 dis eis <dis gisis> ais'16 eis gisis ais
-  bis gisis fis dis bis ais gisis4 <eis dis'>8
-  <gisis eis'>4 <ais fisis'>8 <bis gisis'>4.
+  r4. <bis cis eis> r q r q r <bis cis eis>16 eis,\( gis fisis fis eis
+  cis4 gis'16 ais <gis cis eis>4.\)
+  r8 dis\( eis <dis gisis> ais'16 eis gisis ais
+  bis gisis fis dis bis ais gisis4\) <eis dis'>8\(
+  <gisis eis'>4 <ais fisis'>8 <bis gisis'>4.\)
 
-  r4. <bis' cis eis> r q r q r <bis cis eis>16 eis, gis fisis fis eis
-  cis4 gis'16 ais <gis cis eis>4.
-  r8 dis eis <dis gisis> ais'16 eis gisis ais
-  bis gisis fis dis bis ais gisis4 <fis eis'>8
-  <fisis dis' >4 <gis cis>8 << { bis16 cis cisis dis disis eis } \\ { <gisis, bis>4. } >>
+  r4. <bis' cis eis> r q r q r <bis cis eis>16 eis,\( gis fisis fis eis
+  cis4 gis'16 ais <gis cis eis>4.\)
+  r8 dis\( eis <dis gisis> ais'16 eis gisis ais
+  bis gisis fis dis bis ais gisis4\) << { <fis eis'>8\(
+  <fisis dis' >4 <gis cis>8 bis16\) cis cisis-1 dis-2 disis-3 eis-4 } \\ { s8 s4. <gisis, bis>4. } >>
 }
 
 compound-meter-to-simple-meter-mark = \tempo \markup {
@@ -161,7 +162,7 @@ lower-bridgea-midi = \relative c, {
 
 upper-bridgea-dash = \relative c'' {
   \tuplet 3/2 4 {
-    <fisis disis'>8 bis fisis <aisis eis'> cis aisis <fisis cis' fis> ais cis
+    <fisis-1 disis'-5>8 bis-3 fisis-1 <aisis-2 eis'-5> cis-3 aisis-2 <fisis-1 cis'-3 fis>-5 ais cis
   }
 }
 
@@ -176,9 +177,11 @@ upper-melodyb = \relative c' {
   bis dis, bis ais' dis, bis gis' bis, gis fis' bis, fis
   r4 bis,8 <cis eis>4 bis'8 <cis eis>4 cis'8
   bis dis, bis ais' dis, bis bis' dis, bis gis' dis gis,
-  <ais cis> eis cis <eis gisis> dis bis <fis' ais> cis <fis ais>
-  <bis, eis gisis> dis fis gisis bis dis
-  <bis eis gisis> dis fis gisis bis dis
+  \omit TupletNumber
+  <ais cis> eis cis <eis gisis> dis bis <fis' ais> cis <fis-3 ais-5>
+  <bis,-1 eis-2 gisis-4> dis fis gisis-1 bis-2 dis-3
+  <bis-1 eis-4 gisis-5> dis-2 fis-4 gisis-1 bis-2 dis-4
+  \undo \omit TupletNumber
   }
 }
 
@@ -197,7 +200,7 @@ upper-melodyc = \relative c'' {
   \tuplet 3/2 4 { <eis, ais bis eis>4 bis,8 <cis eis>4 bis'8 <cis eis>4 cis'8 }
   << { ais2. } \\ { <bis, dis>4 <b dis> <ais cis> } >> \tuplet 3/2 4 { dis8 eis bis' }
   \tuplet 3/2 4 { <cis, eis cis'>4 cis,8 <dis fis>4 cis'8 } <dis fis>4
-  \tuplet 3/2 4 { <gisis, eis'>8 cis <ais fisis'>8 cis dis fisis <dis eis gisis>4 <dis fisis gisis bis>8~ } q4
+  \tuplet 3/2 4 { <gisis, eis'>8-> cis <ais fisis'>8-> cis dis fisis <dis eis gisis>4-> <dis fisis gisis bis>8~-> } q4
 }
 
 lower-melodyc = \relative c {
@@ -226,11 +229,13 @@ lower-melodyd = \relative c'' {
   \clef treble
   \repeat unfold 3 { \tuplet 3/2 4 { ais8 cis eis } }
   \repeat unfold 4 { \tuplet 3/2 4 { ais,8 bis dis } }
+  \omit TupletNumber
   \repeat unfold 3 { \tuplet 3/2 4 { fisis,8 ais cis } }
   \tuplet 3/2 4 { fis,8 ais cis fis, ais cis eis, gisis cis eis, gisis bis }
   \repeat unfold 3 { \tuplet 3/2 4 { ais8 cis eis } }
   \repeat unfold 4 { \tuplet 3/2 4 { bis dis eis } }
   \tuplet 3/2 4 { cis8 dis ais' cis, dis ais' cis, e ais }
+  \undo \omit TupletNumber
   \clef bass
   <eis,,, bis'>1~
   \time 2/4
@@ -266,23 +271,31 @@ lower-bridged = \relative c {
 }
 
 upper-melodye = \relative c' {
-  \tuplet 3/2 4 { ais8 bis cis cisis dis disis eis disis dis cisis cis bis r eis bis' <cis eis> eis bis' } <cis eis>4
-  \tuplet 3/2 4 { gis,,8 ais aisis bis cis cisis dis cisis cis bis aisis ais r eis' bis' <cis eis> eis bis' } <cis eis>4
-  \tuplet 3/2 4 { fisis,,,8 gis gisis ais aisis bis cis bis aisis ais gisis gis r eis' bis' <cis eis> eis bis' } <cis eis>4
-  <ais,, cis fis>4 <gisis bis fis'> <fisis bis fis'> <fis bis fis'> <gis b fis'> <fisis aisis gis'> <fisis aisis fis'>
+  \omit TupletNumber
+  \omit TupletBracket
+  \tuplet 3/2 4 { ais8\( bis cis cisis dis disis eis disis dis cisis cis bis\) r eis bis' <cis eis> eis bis' } <cis eis>4
+  \tuplet 3/2 4 { gis,,8\( ais aisis bis cis cisis dis cisis cis bis aisis ais\) r eis' bis' <cis eis> eis bis' } <cis eis>4
+  \tuplet 3/2 4 { fisis,,,8\( gis gisis ais aisis bis cis bis aisis ais gisis gis\) r eis' bis' <cis eis> eis bis' } <cis eis>4
+  \undo \omit TupletNumber
+  \undo \omit TupletBracket
+  <ais,, cis fis>4\( <gisis bis fis'> <fisis bis fis'> <fis bis fis'> <gis b fis'> <fisis aisis gis'> <fisis aisis fis'>\)
 }
 
 lower-melodye = \relative c, {
-  \tuplet 3/2 4 { <ais ais'>8 bis' cis cisis dis disis eis disis dis cisis cis bis ais eis' ais <bis eis> eis ais } <bis eis>4
-  \tuplet 3/2 4 { <gis,,, gis'>8 ais' aisis bis cis cisis dis cisis cis bis aisis ais gis eis' ais <bis eis> eis ais } <bis eis>4
-  \tuplet 3/2 4 { <fisis,,, fisis'>8 gis' gisis ais aisis bis cis bis aisis ais gisis gis fisis eis' ais <bis eis> eis ais } <bis eis>4
-  \makeOctaves #1 { fis,,,4 eis disis dis cisis cis bis }
+  \omit TupletNumber
+  \tuplet 3/2 4 { <ais ais'>8\( bis' cis cisis dis disis eis disis dis cisis cis bis ais\) eis' ais <bis eis> eis ais } <bis eis>4
+  \tuplet 3/2 4 { <gis,,, gis'>8\( ais' aisis bis cis cisis dis cisis cis bis aisis ais gis\) eis' ais <bis eis> eis ais } <bis eis>4
+  \tuplet 3/2 4 { <fisis,,, fisis'>8\( gis' gisis ais aisis bis cis bis aisis ais gisis gis fisis\) eis' ais <bis eis> eis ais } <bis eis>4
+  \undo \omit TupletNumber
+  \makeOctaves #1 { fis,,,4\( eis disis dis cisis cis bis\) }
 }
 
 upper-bridgee = \relative c' {
   << {
-    \makeOctaves #1 { \tuplet 3/2 4 { dis8 cisis dis disis eis fis eis disis eis fis fisis gis
-    gisis ais b bis cis cisis dis disis eis fis fis eis }}
+    \makeOctaves #1 { \tuplet 3/2 4 { dis8\( cisis dis disis eis fis\) eis\( disis eis fis fisis gis\)
+    \omit TupletNumber
+    gisis\( ais b bis cis cisis\) dis\( disis eis fis fis eis\) }}
+    \undo \omit TupletNumber
   } \\ {
     <a, bis>4 s4 <b cisis> s <dis fis> <fis gisis> <gisis bis> <bis dis>
   } >>
@@ -290,8 +303,10 @@ upper-bridgee = \relative c' {
 
 lower-bridgee = \relative c, {
   \makeOctaves #1 { \tuplet 3/2 4 {
-    fis8 eis fis fisis gis a gis fisis gis gisis ais b
-    bis cis cisis dis disis eis fis fisis gis gisis ais bis
+    fis8\( eis fis fisis gis a\) gis\( fisis gis gisis ais b\)
+    \omit TupletNumber
+    bis\( cis cisis dis disis eis\) fis\( fisis gis gisis ais bis\)
+    \undo \omit TupletNumber
   }}
 }
 
@@ -427,6 +442,7 @@ lower-midi = \relative c {
 
 upper-print = \relative c' {
   \set Staff.pedalSustainStyle = #'bracket
+  \set fingeringOrientations = #'(up)
   \clef treble
   \tempo 4. = 52
   \time 6/8
@@ -491,7 +507,43 @@ lower-print = \relative c {
 }
 
 dynamics = {
-  s1
+  s2.\mp s2.*5 s2.\p s2.
+  s2.*15
+  s4. s4.-"cresc."
+  s2. s2.
+  s2.\mf s1
+  s2. s1
+  s2. s1
+  s2. s1-"cresc."
+  s2.\f s1
+  \repeat unfold 3 { s2. s1 }
+  s4 s4\mp
+  s2.-"legato" s1
+  \repeat unfold 3 { s2. s1 }
+  s2
+  s2.\mf
+  s2.*15
+  s4. s4.-"cresc."
+  s2.
+  s2.\mf s1
+  s2. s1
+  s2. s1
+  s2. s1-"cresc."
+  s2.\f s1
+  \repeat unfold 3 { s2. s1 }
+  s2.-"non marcato" s1
+  \repeat unfold 3 { s2. s1 }
+  s8\mp s8-"cresc." s2. s1
+  s2.\ff s1
+  \repeat unfold 7 { s2. s1 }
+  s2.\mf s2. s2 s4.-"dim." s2.
+  s2.\p
+  s2.*14
+  s4. s4.-"cresc."
+  s2.\mf
+  s2.-"senza dim. e senza rit."
+  s2.
+
 }
 
 guitarchords = \chordmode {
@@ -691,6 +743,7 @@ melody = \relative c' {
     \new Staff = "melodystaff" \with {
       fontSize = #-3
       \override StaffSymbol.staff-space = #(magstep -3)
+      \override StaffSymbol.thickness = #(magstep -3)
     }
     <<
       \set Staff.midiInstrument = #"choir aahs"
